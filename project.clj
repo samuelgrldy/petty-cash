@@ -40,6 +40,9 @@
    [clojure.java-time "1.2.0"]
    [danlentz/clj-uuid "0.1.9"]
 
+   ;;image processing
+   [org.clojure/data.codec "0.1.1"]
+
    ;; file/formatting and development utilities
    [org.clojure/tools.namespace "1.4.4"]
    [pjstadig/humane-test-output "0.11.0"]

@@ -42,12 +42,10 @@
    :headers      {"Authorization" (str "Bearer " api-token)}})
 
 (def models
-  {:gpt-3 "gpt-3.5-turbo-0125"
-   "gpt-3" "gpt-3.5-turbo-0125"
-   :gpt-4 "gpt-4o"
+  {:gpt-4 "gpt-4o"
    "gpt-4" "gpt-4o"
-   :gpt-4o "gpt-4o-mini"
-   "gpt-4o" "gpt-4o-mini"})
+   :gpt-4o-mini "gpt-4o-mini"
+   "gpt-4o-mini" "gpt-4o-mini"})
 
 (defn generate
   "Just call this one to generate the response from openAI"
@@ -59,13 +57,13 @@
                :max_tokens      16000
                :temperature     0.21
                :n               1}]
-     (u/pres data)
+     ;(u/pres data)
      (let [resp (try (->> data
                           (json/generate-string)
                           (assoc (base-request openai-key) :body)
                           (http/post openai-url))
                      (catch Exception e (u/error e)))]
-       (u/pres resp)
+       ;(u/pres resp)
        (let [resp1 (-> (:body resp)
                        (json/parse-string true))]
          (u/pres resp1)
