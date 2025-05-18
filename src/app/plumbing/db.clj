@@ -23,18 +23,6 @@
   (stop [this]
     (u/info "Stub DB stopped")
     this))
-                   ;;                          (dbrefs/update-refs-client {:db db-client :refs updated-refs-client})
-                   ;;                          future)
-                   ;:refs               refs
-                   ;; :refs-client        refs-client
-                   })))
-  (stop [this]
-    (when-let [conn (:conn this)]
-      (mg/disconnect conn))
-    (u/info "Database stopped")
-    (dissoc this :conn)
-    (reset! (:scheduler-running? this) false)
-    (u/info "Scheduler stopped")))
 
 (defn create-database-component []
   (map->Dbase {}))
