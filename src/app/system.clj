@@ -1,6 +1,5 @@
 (ns app.system
-  (:require [app.plumbing.db :as db]
-            [app.plumbing.handler :as http]
+  (:require [app.plumbing.handler :as http]
             [app.plumbing.openai :as openai]
             [app.astro.store :as astro]
             [app.plumbing.server :as immut]
@@ -24,7 +23,6 @@
     (u/info "Preparing the system")
     (component/system-map
       :openai (openai/create-openai-component other-config)
-      :dbase (db/create-database-component)
       :server (component/using (immut/create-server-component server) [:handler])
       :handler (component/using (http/create-handler-component) [:dbase :openai])
-      :order-store (astro/create-store-component)))
+      :astro (astro/create-store-component))))
