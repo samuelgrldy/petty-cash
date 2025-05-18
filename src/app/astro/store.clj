@@ -9,7 +9,10 @@
   (if (.exists f) (edn/read-string (slurp f))
       {:meta {} :orders {} :indexes {}}))
 
-(defn- save-db! [f db] (spit f (with-out-str (pr db))))
+(defn- save-db! [f db]
+  ;; ensure parent directory exists before we spit
+  (doto (.getParentFile f) (.mkdirs))
+  (spit f (with-out-str (pr db))))
 
 (defn save!
   "Persist current state of store to its EDN file."
