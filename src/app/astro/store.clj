@@ -1,0 +1,48 @@
+(ns app.astro.store
+  (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
+            [clojure.set :as set]
+            [app.utils :as u]
+            [com.stuartsierra.component :as component]))
+
+(defn- load-db [f]
+  (if (.exists f) (edn/read-string (slurp f))
+      {:meta {} :orders {} :indexes {}}))
+
+(defn- save-db! [f db] (spit f (with-out-str (pr db))))
+
+;; ---- index helpers -----------------------------------------------------
+(defn- add-index [idx k id]
+  (update idx k (fnil conj #{}) id))
+
+(defn- update-indexes [indexes {:keys [id date status]}]
+  (-> indexes
+      (add-index [:by-month (:month date)] id)
+      (add-index [:by-status status]        id)))
+
+;; ---- merge -------------------------------------------------------------
+(defn merge-orders [db orders]
+  (reduce
+    (fn [{:keys [orders indexes] :as acc} o]
+      (if (contains? orders (:id o))
+        acc
+        (let [orders'  (assoc orders (:id o) o)
+              indexes' (update-indexes indexes o)]
+          (assoc acc :orders orders' :indexes indexes'))))
+    db orders))
+
+;; ---- component ---------------------------------------------------------
+(defrecord OrderStore [path ^:mutable db]
+  component/Lifecycle
+  (start [this]
+    (u/info "Starting OrderStore" path)
+    (let [file (io/file path)]
+      (set! db (atom (load-db file)))
+      (assoc this :file file)))
+  (stop  [this] this))
+
+(defn create-store-component
+  ([]
+   (create-store-component "data/orders.edn"))
+  ([path]
+   (map->OrderStore {:path path})))

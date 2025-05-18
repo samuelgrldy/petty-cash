@@ -2,6 +2,7 @@
   (:require [app.plumbing.db :as db]
             [app.plumbing.handler :as http]
             [app.plumbing.openai :as openai]
+            [app.astro.store :as astro]
             [app.plumbing.server :as immut]
             [app.utils :as u]
             [com.stuartsierra.component :as component]))

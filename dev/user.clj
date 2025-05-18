@@ -1,5 +1,7 @@
 (ns user
-  (:require [clojure.tools.namespace.repl :refer [refresh]]))
+  (:require [clojure.tools.namespace.repl :refer [refresh]]
+            [app.system :as sys]
+            [com.stuartsierra.component :as component]))
 
 (defn dev
   []
