@@ -15,27 +15,14 @@
 ;                  :debug       db-mongo-debug}
 
 
-(defrecord Dbase [db-mongo-config]
+(defrecord Dbase []
   component/Lifecycle
   (start [this]
-    (u/info "Starting the database component")
-    #_(u/pres db-mongo-config)
-    (let [
-          ;conn (mg/connect db-mongo-config)
-          ;db (mg/get-db conn (:db db-mongo-config))
-          ;refs (dbrefs/create-refs)
-          scheduler-running? (atom true)
-          ;updated-refs (dbrefs/prep-refs {:db-content db-content :db-client db-client :refs refs})
-          ;; updated-refs-client       (dbrefs/prep-refs {:db db-client :refs refs-client})
-          ]
-      (u/info "Starting the database and the dbref")
-      (merge this {:conn nil
-                   :db nil
-                   :scheduler-running? scheduler-running?
-                   ;:scheduler          (->> scheduler-running?
-                   ;                         (dbrefs/update-refs {:db-content db-content :db-client db-client :refs updated-refs})
-                   ;                         future)
-                   ;;; :scheduler-client   (->> scheduler-running?
+    (u/info "Starting stub DB component – no mongo")
+    (assoc this :conn nil :db nil))
+  (stop [this]
+    (u/info "Stub DB stopped")
+    this))
                    ;;                          (dbrefs/update-refs-client {:db db-client :refs updated-refs-client})
                    ;;                          future)
                    ;:refs               refs
