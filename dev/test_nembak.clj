@@ -5,7 +5,7 @@
             [clojure.string :as str]
             [java-time :as t]))
 
-(def auth-token "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTUyNjYyMzEsImlzcyI6Imh0dHBzOi8vd3d3LmFzdHJvbmF1dHMuaWQiLCJyZWZyZXNoX2V4cGlyeSI6MTc1NTI2NjIzMSwic3ViIjoiMTIzMjIwNyIsInRlbXBvcmFyeV90b2tlbiI6ZmFsc2UsInVzZXJfcGVybWlzc2lvbnMiOiJBVVRIX0NVU1RPTUVSIiwidXNlcl90eXBlIjoiY3VzdG9tZXIiLCJ2ZW5kb3JfaWQiOjB9.kTLl7oHxoo0STEGOBjUwIHtnW4x2Ed3vAb5XpUUqSbKZG2l5vMc2LBDqrAANqIQueQgYZ6OE8YRb8L82uVnQgg") ;; Isi dengan token aslimu
+(def auth-token "") ;; Isi dengan token aslimu
 
 (defn get-astro-orders
   "Mengambil riwayat order dari API Astro Groceries"
