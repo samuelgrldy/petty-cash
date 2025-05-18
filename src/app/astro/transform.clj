@@ -15,6 +15,14 @@
         (subs 0 4)
         Integer/parseInt)
     (catch Exception _ nil)))
+  
+(defn- parse-money
+  "Turn a price string such as \"17.39\", \"17.390\", \"17,390\" or \"17390\"
+   into a long (integer Rupiah).  Removes every non-digit char before parsing."
+  [s]
+  (-> (or s "0")
+      (str/replace #"[^0-9]" "")
+      (Long/parseLong)))
 
 (def ^:private delivered-str "Pesanan Sudah Diterima")
 
@@ -49,8 +57,8 @@
 ;; item/order transform ---------------------------------------------------
 (defn transform-item [m]
   (let [q  (Integer/parseInt (:order_item_product_quantity m))
-        bp (Long/parseLong    (:order_item_product_price m))
-        dp (Long/parseLong    (:order_item_product_discount_price m))]
+        bp (parse-money      (:order_item_product_price m))
+        dp (parse-money      (:order_item_product_discount_price m))]
     {:name           (:order_item_product_name m)
      :quantity       q
      :base-price     bp
@@ -62,5 +70,5 @@
    :invoice    (:order_invoice m)
    :status     (normalize-status (:order_status m))
    :date       (parse-order-date (:order_invoice m) (:order_date m))
-   :total-paid (Long/parseLong (:order_total_price m))
+   :total-paid (parse-money (:order_total_price m))
    :items      (mapv transform-item (:order_line_items m))})
