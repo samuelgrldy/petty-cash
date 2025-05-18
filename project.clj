@@ -59,7 +59,7 @@
    ]
 
   :injections [(require 'pjstadig.humane-test-output)
-               (pjstadig.humane-test-output/activate!)]
+               (pjstadig/humane-test-output/activate!)]
 
   :uberjar-name "uberjar-app.jar"
   :jar-name "appstore.jar"
