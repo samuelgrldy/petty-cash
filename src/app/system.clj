@@ -17,19 +17,8 @@
                 openai-url
                 openai-key
 
-                db-mongo-uri
-                db-mongo
-
-                db-mongo-port
-                db-mongo-quiet
-                db-mongo-debug
                 ]} (u/read-config-true-flat)
         server {:port server-port :path server-path :host server-host}
-        db-mongo {:port  db-mongo-port
-                  :uri   db-mongo-uri
-                  :db    db-mongo
-                  :quiet db-mongo-quiet
-                  :debug db-mongo-debug}
         other-config {:openai-url openai-url
                       :openai-key openai-key}]
     (u/info "Preparing the system")
