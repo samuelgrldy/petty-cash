@@ -18,17 +18,32 @@
      "X-Device-Version" (or (env :astro-device-version) "2.17.2")
      "User-Agent"       "astro-clj/0.1"
      "Accept"           "application/json"}))
+(defn- scrub [m] (dissoc m "Authorization"))
 
 ;; --- public -------------------------------------------------------------
 (defn fetch-page
+  "Return one page of raw orders, throws ex-info when HTTP status ≠ 200.
+   Logs sanitized request & response on error."
   [{:keys [page-size page-index] :or {page-size 25 page-index 0}}]
-  (let [req {:url          "https://api.astronauts.id/api/order"
-             :query-params {:pageIndex page-index
-                            :pageSize  page-size
-                            :orderType "instant"}
-             :headers      (auth-headers)
-             :as           :json}]
-    (:body (http/get (:url req) (dissoc req :url)))))
+  (let [req  {:url "https://api.astronauts.id/api/order"
+              :query-params {:pageIndex page-index
+                             :pageSize  page-size
+                             :orderType "instant"}
+              :headers (auth-headers)
+              :as      :json
+              :throw-exceptions false}              ;; <— prevent automatic throw
+        resp (http/get (:url req) (dissoc req :url))
+        status (:status resp)]
+    (if (= 200 status)
+      (:body resp)
+      (do
+        (u/error "Astro API error"
+                 {:status status
+                  :request  (-> req scrub (dissoc :url))
+                  :response (select-keys resp [:headers :body])})
+        (throw (ex-info "Astro HTTP error"
+                        {:status status
+                         :body   (:body resp)}))))))
 
 (defn fetch-all
   "Return lazy seq of **raw** order maps."
