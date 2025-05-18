@@ -14,7 +14,7 @@
   (refresh :after 'user/go))
 
 ;; quick handle to the order store
-(defn store [] (:order-store @system*))
+(defn store [] (:astro @system*))
 
 (defn dev
   []

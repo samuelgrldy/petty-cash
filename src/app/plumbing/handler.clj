@@ -11,8 +11,8 @@
    [ring.middleware.stacktrace :refer [wrap-stacktrace]]
    [jumblerg.middleware.cors :as jcors]))
 
-(defn create-handler [db openai zenbrain]
-  (-> (routes/create-routes db openai zenbrain)
+(defn create-handler [astro openai zenbrain]
+  (-> (routes/create-routes @(:db astro) openai zenbrain)
       (ring/ring-handler)
       (jcors/wrap-cors #".*")
       wrap-params

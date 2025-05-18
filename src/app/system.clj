@@ -24,5 +24,5 @@
     (component/system-map
       :openai (openai/create-openai-component other-config)
       :server (component/using (immut/create-server-component server) [:handler])
-      :handler (component/using (http/create-handler-component) [:dbase :openai])
+      :handler (component/using (http/create-handler-component) [:astro :openai])
       :astro (astro/create-store-component))))
