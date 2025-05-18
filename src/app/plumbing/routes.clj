@@ -1,6 +1,5 @@
 (ns app.plumbing.routes
   (:require [app.utils :as u]
-            [monger.collection :as mc]
             [reitit.ring :as ring]))
 
 (defn api-check

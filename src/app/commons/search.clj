@@ -1,7 +1,6 @@
 (ns app.commons.search
   (:require
     [app.utils :refer :all]
-    [monger.collection :as mc]
     [clojure.string :as cs]
     [clojure.set :as cset]))
 
