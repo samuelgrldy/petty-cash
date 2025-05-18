@@ -29,10 +29,10 @@
       ;; trace-http/wrap-exception-event
       (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))))
 
-(defrecord Handler [dbase openai zenbrain]
+(defrecord Handler [astro openai zenbrain]
   component/Lifecycle
   (start [this]
-    (assoc this :handler (create-handler dbase openai zenbrain)))
+    (assoc this :handler (create-handler astro openai zenbrain)))
   (stop [this]
     this))
 
