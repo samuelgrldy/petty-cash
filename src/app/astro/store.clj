@@ -32,13 +32,13 @@
     db orders))
 
 ;; ---- component ---------------------------------------------------------
-(defrecord OrderStore [path ^:mutable db]
+(defrecord OrderStore [path file db]         ;; db is now stored in the map
   component/Lifecycle
   (start [this]
     (u/info "Starting OrderStore" path)
-    (let [file (io/file path)]
-      (set! db (atom (load-db file)))
-      (assoc this :file file)))
+    (let [file  (io/file path)
+          state (atom (load-db file))]
+      (assoc this :file file :db state)))
   (stop  [this] this))
 
 (defn create-store-component

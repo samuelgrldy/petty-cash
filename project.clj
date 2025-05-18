@@ -20,7 +20,6 @@
    [selmer "1.12.56" :exclusions [commons-codec]]
 
    ;; database & data processing
-   [com.novemberain/monger "3.6.0"]
    [cheshire "5.11.0"]
    [com.github.seancorfield/next.jdbc "1.3.909"]
    [org.postgresql/postgresql "42.7.2"]

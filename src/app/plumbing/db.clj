@@ -1,9 +1,6 @@
 (ns app.plumbing.db
-  (:require
-    [com.stuartsierra.component :as component]
-    [monger.collection :as mc]
-    [app.utils :as u]
-    [monger.core :as mg]))
+  (:require [com.stuartsierra.component :as component]
+            [app.utils :as u]))
 
 (declare clear-db)
 
@@ -52,10 +49,10 @@
     (reset! (:scheduler-running? this) false)
     (u/info "Scheduler stopped")))
 
-(defn create-database-component [db-mongo-config]
-  (map->Dbase {:db-mongo-config db-mongo-config}))
+(defn create-database-component []
+  (map->Dbase {}))
 
-(defn clear-db
+#_(defn clear-db
   "Dropping the database"
   [db]
   (mc/remove db "creds" {}))

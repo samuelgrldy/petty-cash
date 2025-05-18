@@ -35,7 +35,7 @@
     (u/info "Preparing the system")
     (component/system-map
       :openai (openai/create-openai-component other-config)
-      :dbase (db/create-database-component db-mongo)
+      :dbase (db/create-database-component)
       :server (component/using (immut/create-server-component server) [:handler])
       :handler (component/using (http/create-handler-component) [:dbase :openai])
       :order-store (astro/create-store-component)))
