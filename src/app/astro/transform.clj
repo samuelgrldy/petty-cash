@@ -16,6 +16,22 @@
         Integer/parseInt)
     (catch Exception _ nil)))
 
+(def ^:private delivered-str "Pesanan Selesai")
+
+(defn- normalize-status
+  "Turn Astro status string into our keyword.
+   Guarantees :delivered whenever the constant `delivered-str`
+   appears, explicit :cancelled for the known cancel string,
+   otherwise slug-ify whatever we get."
+  [s]
+  (cond
+    (= s delivered-str)         :delivered
+    (= s "Pesanan Dibatalkan")  :cancelled
+    :else (-> s
+              str/lower-case
+              (str/replace #"[^a-z0-9]+" "-")
+              keyword)))
+
 (defn parse-order-date
   "Parse Astro order string, injecting year derived from invoice."
   [invoice s]
@@ -39,7 +55,7 @@
 (defn transform-order [m]
   {:id         (:order_id m)
    :invoice    (:order_invoice m)
-   :status     (if (= "Pesanan Dibatalkan" (:order_status m)) :cancelled :delivered)
+   :status     (normalize-status (:order_status m))
    :date       (parse-order-date (:order_invoice m) (:order_date m))
    :total-paid (Long/parseLong (:order_total_price m))
    :items      (mapv transform-item (:order_line_items m))})
