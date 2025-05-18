@@ -8,7 +8,7 @@
             [com.stuartsierra.component :as component]))
 
 (defn create-system
-  "It creates a system, and return the system, but not started yet"
+  "It creates a system, and returns the system, but not started yet"
   []
   (let [{:keys [server-path
                 server-port
