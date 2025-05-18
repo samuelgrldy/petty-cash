@@ -27,10 +27,6 @@
 (defn create-database-component []
   (map->Dbase {}))
 
-#_(defn clear-db
-  "Dropping the database"
-  [db]
-  (mc/remove db "creds" {}))
 
 ;; read the app.schema so you know the structure
 

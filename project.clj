@@ -44,7 +44,7 @@
 
    ;; file/formatting and development utilities
    [org.clojure/tools.namespace "1.4.4"]
-   [pjstadig/humane-test-output "0.11.0"]
+   ;[pjstadig/humane-test-output "0.11.0"]
    [ring/ring-mock "0.4.0"]
    ;; s3 upload
    ;; [software.amazon.awssdk/s3 "2.17.271"]
@@ -58,8 +58,6 @@
 
    ]
 
-  :injections [(require 'pjstadig.humane-test-output)
-               (pjstadig/humane-test-output/activate!)]
 
   :uberjar-name "uberjar-app.jar"
   :jar-name "appstore.jar"

@@ -119,12 +119,9 @@
                          :openai-url
                          :openai-key
 
-                         :db-mongo-uri
-                         :db-mongo
+                         :astro-token
+                         :astro-device-id
 
-                         :db-mongo-port
-                         :db-mongo-quiet
-                         :db-mongo-debug
                          ]
         to-be-read-keys [:server-port
                          :openai-key

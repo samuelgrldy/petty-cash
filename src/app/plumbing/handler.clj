@@ -11,8 +11,8 @@
    [ring.middleware.stacktrace :refer [wrap-stacktrace]]
    [jumblerg.middleware.cors :as jcors]))
 
-(defn create-handler [astro openai zenbrain]
-  (-> (routes/create-routes @(:db astro) openai zenbrain)
+(defn create-handler [astro openai]
+  (-> (routes/create-routes @(:db astro) openai)
       (ring/ring-handler)
       (jcors/wrap-cors #".*")
       wrap-params
@@ -29,10 +29,10 @@
       ;; trace-http/wrap-exception-event
       (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))))
 
-(defrecord Handler [astro openai zenbrain]
+(defrecord Handler [astro openai]
   component/Lifecycle
   (start [this]
-    (assoc this :handler (create-handler astro openai zenbrain)))
+    (assoc this :handler (create-handler astro openai)))
   (stop [this]
     this))
 

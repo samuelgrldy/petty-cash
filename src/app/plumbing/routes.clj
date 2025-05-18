@@ -12,6 +12,6 @@
 
 (defn create-routes
   "Creates the whole routes for the system"
-  [db openai zenbrain]
+  [db openai]
   (ring/router
    [["/" {:get (partial api-check db)}]]))
