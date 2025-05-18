@@ -11,6 +11,12 @@
 
 (defn- save-db! [f db] (spit f (with-out-str (pr db))))
 
+(defn save!
+  "Persist current state of store to its EDN file."
+  [{:keys [file db] :as store}]
+  (save-db! file @db)
+  store)
+
 ;; ---- index helpers -----------------------------------------------------
 (defn- add-index [idx k id]
   (update idx k (fnil conj #{}) id))

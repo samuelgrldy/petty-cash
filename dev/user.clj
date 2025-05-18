@@ -26,4 +26,8 @@
   (require '[gpt-play])
   (in-ns 'gpt-play))
 
+(defn fetch! []
+  (require '[app.astro.pipeline :as pipe])
+  (pipe/sync! (store)))
+
 
