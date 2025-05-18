@@ -33,13 +33,18 @@
               keyword)))
 
 (defn parse-order-date
-  "Parse Astro order string, injecting year derived from invoice."
+  "Parse Astro order string, injecting year derived from invoice and extracting hour/minute if present."
   [invoice s]
-  (let [[d m _t] (str/split s #"[ ,]+")]
-    {:raw   s
-     :day   (Integer/parseInt d)
-     :month (month->num m)
-     :year  (invoice->year invoice)}))
+  (let [[d m t] (str/split s #"[ ,]+")
+        [hh mm] (when t
+                  (map #(Integer/parseInt %)
+                       (str/split t #":")))]
+    {:raw    s
+     :day    (Integer/parseInt d)
+     :month  (month->num m)
+     :year   (invoice->year invoice)
+     :hour   (or hh 0)
+     :minute (or mm 0)}))
 
 ;; item/order transform ---------------------------------------------------
 (defn transform-item [m]

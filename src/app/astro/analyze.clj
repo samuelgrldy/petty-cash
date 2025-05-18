@@ -7,6 +7,10 @@
   [astro-store]
   (-> astro-store :db deref :orders vals))
 
+(defn- date->vec [{:keys [date]}]
+  (let [{:keys [year month day hour minute]} date]
+    [year month day (or hour 0) (or minute 0)]))
+
 (defn- valid-order?
   [{:keys [date]}]
   (every? some? [(:year date) (:month date)]))
@@ -21,6 +25,7 @@
   (->> (all-orders astro-store)
        (filter valid-order?)
        (filter #(= [year month] (ym-key %)))
+       (sort-by date->vec)
        vec))
 
 (defn spend-by-month
