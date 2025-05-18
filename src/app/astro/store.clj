@@ -26,8 +26,11 @@
 
 (defn- update-indexes [indexes {:keys [id date status]}]
   (-> indexes
+      ;; month only (kept for backward-compat)
       (add-index [:by-month (:month date)] id)
-      (add-index [:by-status status]        id)))
+      ;; NEW: year-month index → [yyyy mm]
+      (add-index [:by-year-month (:year date) (:month date)] id)
+      (add-index [:by-status status] id)))
 
 ;; ---- merge -------------------------------------------------------------
 (defn merge-orders [db orders]
