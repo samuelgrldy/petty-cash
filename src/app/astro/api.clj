@@ -46,10 +46,15 @@
                          :body   (:body resp)}))))))
 
 (defn fetch-all
-  "Return lazy seq of **raw** order maps."
+  "Return a lazy seq of raw order maps.  
+   Keeps paging while the API keeps returning a full page."
   ([]
+   (fetch-all {}))
+  ([{:keys [page-size] :or {page-size 20}}]
    (letfn [(step [idx]
              (lazy-seq
-               (let [{:keys [content last]} (fetch-page {:page-index idx})]
-                 (concat content (when-not last (step (inc idx)))))))]
+               (let [{:keys [content]} (fetch-page {:page-index idx
+                                                    :page-size  page-size})
+                     more? (= (count content) page-size)]
+                 (concat content (when more? (step (inc idx)))))))]
      (step 0))))
