@@ -37,4 +37,5 @@
       :openai (openai/create-openai-component other-config)
       :dbase (db/create-database-component db-mongo)
       :server (component/using (immut/create-server-component server) [:handler])
-      :handler (component/using (http/create-handler-component) [:dbase :openai]))))
+      :handler (component/using (http/create-handler-component) [:dbase :openai])
+      :order-store (astro/create-store-component))) ))

@@ -3,6 +3,19 @@
             [app.system :as sys]
             [com.stuartsierra.component :as component]))
 
+(defonce system* (atom nil))
+
+(defn go []
+  (reset! system* (component/start (sys/create-system)))
+  :started)
+
+(defn reset []
+  (when @system* (swap! system* component/stop))
+  (refresh :after 'user/go))
+
+;; quick handle to the order store
+(defn store [] (:order-store @system*))
+
 (defn dev
   []
   (require '[dev])
