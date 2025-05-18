@@ -24,7 +24,7 @@
 (defn fetch-page
   "Return one page of raw orders, throws ex-info when HTTP status ≠ 200.
    Logs sanitized request & response on error."
-  [{:keys [page-size page-index] :or {page-size 25 page-index 0}}]
+  [{:keys [page-size page-index] :or {page-size 20 page-index 0}}]
   (let [req  {:url "https://api.astronauts.id/api/order"
               :query-params {:pageIndex page-index
                              :pageSize  page-size
