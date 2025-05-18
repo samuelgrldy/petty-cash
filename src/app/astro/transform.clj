@@ -16,7 +16,7 @@
         Integer/parseInt)
     (catch Exception _ nil)))
 
-(def ^:private delivered-str "Pesanan Selesai")
+(def ^:private delivered-str "Pesanan Sudah Diterima")
 
 (defn- normalize-status
   "Turn Astro status string into our keyword.

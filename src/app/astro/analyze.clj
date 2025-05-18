@@ -46,3 +46,13 @@
                     (assoc acc ym {:orders-count (count os)
                                    :total-spent  (reduce + (map :total-paid os))}))
                   {})))
+
+(comment
+
+  ;testing and running here. lfgo
+
+  (orders-by-month (:astro @user/system*) 2024 11)
+
+  (spend-by-month (:astro @user/system*) 2025 5)
+
+  )
