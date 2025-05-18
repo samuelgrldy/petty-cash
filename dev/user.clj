@@ -1,7 +1,8 @@
 (ns user
   (:require [clojure.tools.namespace.repl :refer [refresh]]
             [app.system :as sys]
-            [com.stuartsierra.component :as component]))
+            [com.stuartsierra.component :as component]
+            [app.astro.pipeline :as pipe]))
 
 (defonce system* (atom nil))
 
@@ -27,7 +28,6 @@
   (in-ns 'gpt-play))
 
 (defn fetch! []
-  (require '[app.astro.pipeline :as pipe])
   (pipe/sync! (store)))
 
 
